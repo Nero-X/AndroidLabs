@@ -2,6 +2,9 @@ package com.example.lab2_2
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -25,6 +28,12 @@ class MainActivity : AppCompatActivity() {
             catch (e: ArithmeticException)
             {
                 textView_res.text = "\u221e"
+                var toast = Toast.makeText(applicationContext, "Деление на ноль!", Toast.LENGTH_LONG)
+                /*var imgView = ImageView(applicationContext)
+                imgView.setImageResource(R.drawable.zero)*/
+                /*var toastContainer = toast.view as LinearLayout
+                toastContainer.addView(imgView)*/
+                toast.show()
             }
         }
     }
