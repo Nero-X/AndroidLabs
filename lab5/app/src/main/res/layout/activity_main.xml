@@ -40,6 +40,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="btnClickHandler"
                 android:text="2"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
@@ -48,6 +49,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="btnClickHandler"
                 android:text="3"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
@@ -56,6 +58,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="btnClickHandler"
                 android:text="4"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
         </TableRow>
@@ -70,6 +73,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="btnClickHandler"
                 android:text="5"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
@@ -78,6 +82,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="btnClickHandler"
                 android:text="6"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
@@ -86,6 +91,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="btnClickHandler"
                 android:text="7"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
@@ -94,6 +100,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="btnClickHandler"
                 android:text="8"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
         </TableRow>
@@ -108,6 +115,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="btnClickHandler"
                 android:text="9"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
@@ -116,6 +124,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="btnClickHandler"
                 android:text="10"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
@@ -124,6 +133,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="btnClickHandler"
                 android:text="11"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
@@ -132,6 +142,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="btnClickHandler"
                 android:text="12"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
         </TableRow>
@@ -146,6 +157,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="btnClickHandler"
                 android:text="13"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
@@ -154,6 +166,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="btnClickHandler"
                 android:text="14"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
@@ -162,6 +175,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="btnClickHandler"
                 android:text="15"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
@@ -170,6 +184,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="btnClickHandler"
                 android:text="0"
                 android:visibility="invisible" />
         </TableRow>

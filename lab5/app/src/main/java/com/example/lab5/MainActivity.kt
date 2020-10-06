@@ -1,14 +1,14 @@
 package com.example.lab5
 
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TableRow
-import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.get
 import kotlinx.android.synthetic.main.activity_main.*
+import java.lang.Exception
+import java.util.ArrayList
 
 class MainActivity : AppCompatActivity() {
     private lateinit var arr: Array<IntArray>
@@ -39,6 +39,9 @@ class MainActivity : AppCompatActivity() {
             // change appearance
         }*/
 
+    val Button.intText: Int
+    get() = this.text.toString().toInt()
+
     private fun arrSearch(value: Int): Pair<Int, Int>
     {
         var row = 0
@@ -63,13 +66,53 @@ class MainActivity : AppCompatActivity() {
         return arr
     }
 
+    private fun arrSwap(index1 : Pair<Int, Int>, index2: Pair<Int, Int>)
+    {
+        val a = arr[index1.first][index1.second]
+        arr[index1.first][index1.second] = arr[index2.first][index2.second]
+        arr[index2.first][index2.second] = a
+    }
+
+    private fun btnSwap(index1 : Pair<Int, Int>, index2: Pair<Int, Int>)
+    {
+        val tr1 = tableLayout[index1.first] as TableRow
+        val btn1 = tr1[index1.second]
+        val tr2 = tableLayout[index2.first] as TableRow
+        val btn2 = tr2[index2.second]
+        tr1.removeViewAt(index1.second)
+        tr2.removeViewAt(index2.second)
+        tr1.addView(btn2, index2.second)
+        tr2.addView(btn1, index1.second)
+    }
+
+    private fun getMovable(): ArrayList<Pair<Int, Int>>
+    {
+        val zero = arrSearch(0)
+        val lst = ArrayList<Pair<Int, Int>>()
+
+        if (zero.first > 0) lst.add(Pair(zero.first - 1, zero.second))
+        if (zero.first < rowsCount - 1) lst.add(Pair(zero.first + 1, zero.second))
+        if (zero.second > 0) lst.add(Pair(zero.first, zero.second - 1))
+        if (zero.second < cellsCount) lst.add(Pair(zero.first, zero.second + 1))
+        return lst
+    }
+
     fun btnClickHandler(v: View)
     {
         val btn = v as Button
-        val tr3 = tableLayout[3] as TableRow
-        val a2 = tr3[2]
-        tr3.removeViewAt(2)
-        tr3.addView(a2)
+
+        val index = arrSearch(btn.intText)
+        try {
+            when
+            {
+                arr[index.first - 1][index.second] == 0 ->
+                {
+                    arrSwap(index, Pair(index.first - 1, index.second))
+                    btnSwap(index, Pair(index.first - 1, index.second))
+                }
+            }
+        }
+        catch (e: Exception) {}
 
         /*when (btn.state)
         {
@@ -90,6 +133,7 @@ class MainActivity : AppCompatActivity() {
             }
         }*/
         //btn.background = getDrawable(R.drawable.button_highlighted)
+        //btn.backgroundTintList = getColorStateList(R.color.colorAccent)
         //((tableLayout[1] as TableRow)[2] as Button).background = getDrawable(R.drawable.button_highlighted)
     }
 }
