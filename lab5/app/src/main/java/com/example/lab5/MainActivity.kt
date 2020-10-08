@@ -2,7 +2,6 @@ package com.example.lab5
 
 import android.os.Bundle
 import android.view.View
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.TableRow
@@ -17,8 +16,8 @@ import kotlin.random.Random
 class MainActivity : AppCompatActivity() {
     private lateinit var arr: Array<IntArray>
     private lateinit var zeroPos: Pair<Int, Int>
-    var rowsCount = 4
-    var cellsCount = 4
+    private var rowsCount = 4
+    private var cellsCount = 4
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,10 +29,10 @@ class MainActivity : AppCompatActivity() {
         highlightMovable()
     }
 
-    val Button.intText: Int
+    private val Button.intText: Int
     get() = this.text.toString().toInt()
 
-    val Button.index: Pair<Int, Int>
+    private val Button.index: Pair<Int, Int>
     get() = arrSearch(this.intText)
 
     private fun arrSearch(value: Int): Pair<Int, Int>
@@ -59,11 +58,6 @@ class MainActivity : AppCompatActivity() {
         return tr[index.second] as Button
     }
 
-    private fun btnSearch(num: Int): Button
-    {
-        return btnSearch(arrSearch(num))
-    }
-
     private fun initArray(rowsCount: Int, cellsCount: Int): Array<IntArray>
     {
         val arr = Array(rowsCount) { i -> IntArray(cellsCount) { j -> i*cellsCount + j + 1} }
@@ -74,43 +68,9 @@ class MainActivity : AppCompatActivity() {
     private fun shuffle()
     {
         val moves = Random.nextInt(2, 8)
-
         for (i in 0..moves) {
             move(getMovable().random())
         }
-        /*var zeroPos = arrSearch(0)
-        for (i in 0..moves) {
-            val btn = getMovable().random()
-            btnSwap(btn, zeroPos)
-            zeroPos = btn
-        }*/
-
-        // Shuffle arr
-        /*val rng = Random()
-        for (i in arr.indices)
-            for (j in arr[i].indices) {
-                val randomPos = rng.nextInt(arr[i].size)
-                val tmp = arr[i][j]
-                arr[i][j] = arr[i][randomPos]
-                arr[i][randomPos] = tmp
-            }*/
-
-        // Check solvability
-        /*var k = 0
-        for (i in arr.indices)
-            for (j in arr[i].indices)
-                for (x in i until arr.size)
-                    for (y in j until arr[x].size){
-                        if (arr[x][y] < arr[i][j]) k++
-                    }
-        k += arrSearch(0).first
-        if (k % 2 != 0) {
-            shuffle()
-            return
-        }*/
-
-        // Position buttons
-
     }
 
     private fun checkSolution()
