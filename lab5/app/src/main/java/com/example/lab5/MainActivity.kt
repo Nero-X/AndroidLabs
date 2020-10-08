@@ -1,46 +1,40 @@
 package com.example.lab5
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.TableRow
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
+import androidx.core.view.iterator
 import kotlinx.android.synthetic.main.activity_main.*
-import java.lang.Exception
-import java.util.ArrayList
+import java.util.*
+import kotlin.concurrent.schedule
+import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
     private lateinit var arr: Array<IntArray>
-    //private lateinit var statesArr: Array<Array<State>>
+    private lateinit var zeroPos: Pair<Int, Int>
     var rowsCount = 4
     var cellsCount = 4
-
-    //enum class State{ DEFAULT, SELECTED, HIGHLIGHTED }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         arr = initArray(rowsCount, cellsCount)
-        //statesArr = Array(rowsCount) { Array(cellsCount) { State.DEFAULT } }
+        zeroPos = arrSearch(0)
+        shuffle()
+        highlightMovable()
     }
-
-    /*var Button.state: State
-        get()
-        {
-            val index = arrSearch(this.text.toString().toInt())
-            return statesArr[index.first][index.second]
-        }
-        set(value)
-        {
-            val index = arrSearch(this.text.toString().toInt())
-            statesArr[index.first][index.second] = value
-            // change appearance
-        }*/
 
     val Button.intText: Int
     get() = this.text.toString().toInt()
+
+    val Button.index: Pair<Int, Int>
+    get() = arrSearch(this.intText)
 
     private fun arrSearch(value: Int): Pair<Int, Int>
     {
@@ -59,6 +53,17 @@ class MainActivity : AppCompatActivity() {
         return row to cell
     }
 
+    private fun btnSearch(index: Pair<Int, Int>): Button
+    {
+        val tr = tableLayout[index.first] as TableRow
+        return tr[index.second] as Button
+    }
+
+    private fun btnSearch(num: Int): Button
+    {
+        return btnSearch(arrSearch(num))
+    }
+
     private fun initArray(rowsCount: Int, cellsCount: Int): Array<IntArray>
     {
         val arr = Array(rowsCount) { i -> IntArray(cellsCount) { j -> i*cellsCount + j + 1} }
@@ -66,74 +71,130 @@ class MainActivity : AppCompatActivity() {
         return arr
     }
 
-    private fun arrSwap(index1 : Pair<Int, Int>, index2: Pair<Int, Int>)
+    private fun shuffle()
+    {
+        val moves = Random.nextInt(2, 8)
+
+        for (i in 0..moves) {
+            move(getMovable().random())
+        }
+        /*var zeroPos = arrSearch(0)
+        for (i in 0..moves) {
+            val btn = getMovable().random()
+            btnSwap(btn, zeroPos)
+            zeroPos = btn
+        }*/
+
+        // Shuffle arr
+        /*val rng = Random()
+        for (i in arr.indices)
+            for (j in arr[i].indices) {
+                val randomPos = rng.nextInt(arr[i].size)
+                val tmp = arr[i][j]
+                arr[i][j] = arr[i][randomPos]
+                arr[i][randomPos] = tmp
+            }*/
+
+        // Check solvability
+        /*var k = 0
+        for (i in arr.indices)
+            for (j in arr[i].indices)
+                for (x in i until arr.size)
+                    for (y in j until arr[x].size){
+                        if (arr[x][y] < arr[i][j]) k++
+                    }
+        k += arrSearch(0).first
+        if (k % 2 != 0) {
+            shuffle()
+            return
+        }*/
+
+        // Position buttons
+
+    }
+
+    private fun checkSolution()
+    {
+        for (i in arr.indices)
+            for (j in arr[i].indices) {
+                if (arr[i][j] != i*cellsCount + j + 1 && arr[i][j] != 0) return
+            }
+
+        // solved
+        for (i in 0 until rowsCount)
+            for (j in 0 until cellsCount) {
+                val anim = AnimationUtils.loadAnimation(applicationContext, R.anim.tile_anim)
+                Timer().schedule((i*cellsCount + j + 1) * 100L) { runOnUiThread { btnSearch(Pair(i, j)).startAnimation(anim) } }
+            }
+    }
+
+    private fun arrSwap(index1 : Pair<Int, Int>, index2: Pair<Int, Int> = zeroPos)
     {
         val a = arr[index1.first][index1.second]
         arr[index1.first][index1.second] = arr[index2.first][index2.second]
         arr[index2.first][index2.second] = a
     }
 
-    private fun btnSwap(index1 : Pair<Int, Int>, index2: Pair<Int, Int>)
+    private fun btnSwap(index1 : Pair<Int, Int>, index2: Pair<Int, Int> = zeroPos)
     {
         val tr1 = tableLayout[index1.first] as TableRow
         val btn1 = tr1[index1.second]
         val tr2 = tableLayout[index2.first] as TableRow
         val btn2 = tr2[index2.second]
-        tr1.removeViewAt(index1.second)
-        tr2.removeViewAt(index2.second)
-        tr1.addView(btn2, index2.second)
-        tr2.addView(btn1, index1.second)
+        tr1.removeView(btn1)
+        tr2.removeView(btn2)
+        if (index1.second < index2.second)
+        {
+            tr1.addView(btn2, index1.second)
+            tr2.addView(btn1, index2.second)
+        }
+        else
+        {
+            tr2.addView(btn1, index2.second)
+            tr1.addView(btn2, index1.second)
+        }
+    }
+
+    private fun move(btn: Pair<Int, Int>)
+    {
+        arrSwap(btn)
+        btnSwap(btn)
+        zeroPos = btn
     }
 
     private fun getMovable(): ArrayList<Pair<Int, Int>>
     {
-        val zero = arrSearch(0)
         val lst = ArrayList<Pair<Int, Int>>()
 
-        if (zero.first > 0) lst.add(Pair(zero.first - 1, zero.second))
-        if (zero.first < rowsCount - 1) lst.add(Pair(zero.first + 1, zero.second))
-        if (zero.second > 0) lst.add(Pair(zero.first, zero.second - 1))
-        if (zero.second < cellsCount) lst.add(Pair(zero.first, zero.second + 1))
+        if (zeroPos.first > 0) lst.add(Pair(zeroPos.first - 1, zeroPos.second))
+        if (zeroPos.first < rowsCount - 1) lst.add(Pair(zeroPos.first + 1, zeroPos.second))
+        if (zeroPos.second > 0) lst.add(Pair(zeroPos.first, zeroPos.second - 1))
+        if (zeroPos.second < cellsCount - 1) lst.add(Pair(zeroPos.first, zeroPos.second + 1))
         return lst
+    }
+
+    private fun highlightMovable()
+    {
+        for (tr in tableLayout)
+            for (btn in (tr as TableRow))
+            {
+                btn.backgroundTintList = null
+            }
+        for (index in getMovable())
+        {
+            btnSearch(index).backgroundTintList = getColorStateList(R.color.highlighted)
+        }
     }
 
     fun btnClickHandler(v: View)
     {
         val btn = v as Button
 
-        val index = arrSearch(btn.intText)
-        try {
-            when
-            {
-                arr[index.first - 1][index.second] == 0 ->
-                {
-                    arrSwap(index, Pair(index.first - 1, index.second))
-                    btnSwap(index, Pair(index.first - 1, index.second))
-                }
-            }
-        }
-        catch (e: Exception) {}
-
-        /*when (btn.state)
+        if (btn.backgroundTintList == getColorStateList(R.color.highlighted))
         {
-            State.DEFAULT ->
-            {
-                // clear all states
-                btn.state = State.SELECTED
-
-            }
-            State.SELECTED ->
-            {
-                // clear all states
-                //btn.state = State.DEFAULT
-            }
-            State.HIGHLIGHTED ->
-            {
-                // swap and clear states
-            }
-        }*/
-        //btn.background = getDrawable(R.drawable.button_highlighted)
-        //btn.backgroundTintList = getColorStateList(R.color.colorAccent)
-        //((tableLayout[1] as TableRow)[2] as Button).background = getDrawable(R.drawable.button_highlighted)
+            move(btn.index)
+            highlightMovable()
+            checkSolution()
+        }
     }
 }
