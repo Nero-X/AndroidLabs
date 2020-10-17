@@ -18,4 +18,9 @@
         android:id="@+id/div"
         android:title="@string/div"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/settings"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="@string/settings"
+        app:showAsAction="ifRoom" />
 </menu>
