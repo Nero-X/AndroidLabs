@@ -32,7 +32,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         buttonCalc.setOnClickListener {
-
+            outerLoop@for (col in 0..linearLayout.childCount)
+                for (row in tableLayout) {
+                    val value = ((row as TableRow)[col] as EditText).text.toString().toInt()
+                    if (value % 2 == 0) {
+                        (linearLayout[col] as TextView).text = value.toString()
+                        continue@outerLoop
+                    }
+                }
         }
 
         for (tr in tableLayout) {
@@ -61,7 +68,7 @@ class MainActivity : AppCompatActivity() {
                             v.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
                             v.textSize = 24f
                             v.text = "0"
-                            v.textAlignment = View.TEXT_ALIGNMENT_CENTER
+                            v.textAlignment = View.TEXT_ALIGNMENT_GRAVITY
                             linearLayout.addView(v)
                         }
                         this@addTextWatcher == tr[tr.childCount - 2] && after == 0 && s.count() == count -> { // remove
