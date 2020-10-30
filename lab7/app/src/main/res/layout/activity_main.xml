@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonRnd"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
         app:layout_constraintDimensionRatio="w,1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button">
+        app:layout_constraintTop_toBottomOf="@+id/buttonRnd">
 
         <TableRow
             android:layout_width="match_parent"
@@ -63,9 +63,28 @@
             <EditText
                 android:id="@+id/editTextNumberSigned4"
                 style="@style/DefaultEditTextCell" />
+
         </TableRow>
 
     </TableLayout>
+
+    <Button
+        android:id="@+id/buttonCalc"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="sans-serif"
+        android:letterSpacing="0.25"
+        android:padding="20dp"
+        android:text="Calculate"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -79,21 +98,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <EditText
-            android:id="@+id/editTextNumberSigned5"
+        <TextView
+            android:id="@+id/textView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:ems="10"
-            android:inputType="numberSigned" />
+            android:text="0"
+            android:textAlignment="center"
+            android:textSize="24sp" />
 
-        <EditText
-            android:id="@+id/editTextNumberSigned6"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="numberSigned" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
