@@ -42,13 +42,10 @@
             android:layout_weight="1">
 
             <EditText
-                android:id="@+id/editTextNumberSigned"
                 style="@style/DefaultEditTextCell"
                 tools:text="54678" />
 
-            <EditText
-                android:id="@+id/editTextNumberSigned2"
-                style="@style/DefaultEditTextCell" />
+            <EditText style="@style/DefaultEditTextCell" />
         </TableRow>
 
         <TableRow
@@ -56,13 +53,9 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-            <EditText
-                android:id="@+id/editTextNumberSigned3"
-                style="@style/DefaultEditTextCell" />
+            <EditText style="@style/DefaultEditTextCell" />
 
-            <EditText
-                android:id="@+id/editTextNumberSigned4"
-                style="@style/DefaultEditTextCell" />
+            <EditText style="@style/DefaultEditTextCell" />
 
         </TableRow>
 
@@ -99,7 +92,6 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
-            android:id="@+id/textView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
