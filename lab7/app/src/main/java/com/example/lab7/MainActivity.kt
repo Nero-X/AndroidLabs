@@ -11,6 +11,7 @@ import androidx.core.view.children
 import androidx.core.view.get
 import androidx.core.view.iterator
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.math.max
 import kotlin.math.min
 import kotlin.properties.Delegates
 import kotlin.random.Random
@@ -37,8 +38,8 @@ class MainActivity : AppCompatActivity() {
             val rowCount = savedInstanceState.getInt("rowCount")
             val colCount = savedInstanceState.getInt("colCount")
             val arr = savedInstanceState.getStringArray("values")!!
-            tableLayout.addRows(rowCount)
-            tableLayout.addColumns(colCount)
+            tableLayout.addRows(rowCount + 1)
+            tableLayout.addColumns(colCount + 1)
             for (i in 0 until rowCount)
                 for (j in 0 until colCount) {
                     tableLayout[i, j] = arr[i * colCount + j]
@@ -155,8 +156,8 @@ class MainActivity : AppCompatActivity() {
                         this@addTextWatcher == tr.children.last() && tr.childCount < MAX_COLUMN_COUNT && after != 0 -> { // add
                             tableLayout.addColumns()
                         }
-                        this@addTextWatcher == tr[tr.childCount - 2] && tr.childCount > MIN_COLUMN_COUNT && after == 0 && s.count() == count -> { // remove
-                            var canDelete = true
+                        tr.childCount > MIN_COLUMN_COUNT && this@addTextWatcher == tr[tr.childCount - 2] && after == 0 && s.count() == count -> { // remove
+                            /*var canDelete = true
                             val index = tr.childCount - 2
                             for (row in tableLayout) {
                                 val editText = (row as TableRow)[index] as EditText
@@ -167,7 +168,7 @@ class MainActivity : AppCompatActivity() {
                                     (row as TableRow).removeViewAt(index)
                                 }
                                 if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) linearLayout.removeViewAt(index)
-                            }
+                            }*/
                         }
                     }
                     when { // rows
@@ -175,15 +176,15 @@ class MainActivity : AppCompatActivity() {
                             /////////// store min textsize, recalculate when needed
                             tableLayout.addRows()
                         }
-                        tr == tableLayout[tableLayout.childCount - 2] && tableLayout.childCount > MIN_ROW_COUNT && after == 0 && s.count() == count -> { // remove
-                            var canDelete = true
+                        tableLayout.childCount > MIN_ROW_COUNT && tr == tableLayout[tableLayout.childCount - 2] && after == 0 && s.count() == count -> { // remove
+                            /*var canDelete = true
                             for (editText in tr) {
                                 if (editText != this@addTextWatcher) canDelete = canDelete && (editText as EditText).text.isNullOrBlank()
                             }
                             if (canDelete) {
                                 tableLayout.removeView(tr)
                                 if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) linearLayout.removeViewAt(linearLayout.childCount - 2)
-                            }
+                            }*/
                         }
                     }
                 }
