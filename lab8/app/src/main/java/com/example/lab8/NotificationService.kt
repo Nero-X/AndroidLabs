@@ -6,17 +6,9 @@ import android.graphics.BitmapFactory
 import android.media.AudioAttributes
 import android.os.Build
 import android.os.IBinder
-import android.os.SystemClock
 import android.provider.Settings
-import android.util.Log
-import android.view.View
-import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_main.*
-import java.io.Console
 import java.util.*
 import kotlin.concurrent.schedule
-import kotlin.concurrent.scheduleAtFixedRate
-import kotlin.random.Random
 
 class NotificationService : Service() {
     private lateinit var notificationManager: NotificationManager
@@ -43,13 +35,11 @@ class NotificationService : Service() {
         if (intent != null) {
             val typeId =  intent.getIntExtra("Type", 0)
             val delay = intent.getIntExtra("Delay", 0)
+            notificationManager.cancel(typeId)
             if (delay > 0) {
-                //val a = Intent(this, NotificationService::class.java)
-                val b = Intent(this, NotificationService::class.java)
-                b.putExtra("Type", typeId).putExtra("Delay", 0)
-                val pendingIntent = PendingIntent.getService(application, 0, b, 0)
-                val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-                alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + delay * 1000, pendingIntent)
+                Timer().schedule(delay * 1000L) {
+                    startService(intent.putExtra("Delay", 0))
+                }
             }
             else {
                 val contentIntent = Intent(this, MainActivity::class.java)
@@ -68,8 +58,7 @@ class NotificationService : Service() {
                     .setAutoCancel(true)
                 when (typeId) {
                     R.id.button_btn -> {
-                        notificationManager.cancel(typeId)
-                        //val pintent = PendingIntent.getService(application, 0, intent.putExtra("delay", 10), 0)
+                        val pintent = PendingIntent.getService(application, 0, intent.putExtra("delay", 10), 0)
                         builder.addAction(Notification.Action.Builder(0, "Отложить", pintent).build())
                     }
                     R.id.button_txt -> {
