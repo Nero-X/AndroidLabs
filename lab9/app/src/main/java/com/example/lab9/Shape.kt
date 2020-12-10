@@ -30,24 +30,6 @@ class Shape(
     fun setCrescent(x: Float, y: Float, diameter: Float, phase: Float) {
         path.reset()
         path.arcTo(x, y, x + diameter, y + diameter, 90f, 180f * if (sign(phase) < 0f) -1f else 1f, false)
-        //if(abs(phase) != 0.5f)
-        //path.arcTo(x, y, x + radius - radius * 0.75f, y + radius, 270f, 180f, false) // -0.75
-        //path.arcTo(x + radius * 0.25f, y, x + radius, y + radius, 270f, -180f, false) // -0.25
-        //path.arcTo(x, y, x + radius, y + radius, 270f, 180f, false) // 0
-        //path.arcTo(x, y, x + radius - radius * 0.25f, y + radius, 270f, 180f, false) // 0.25
-        //path.arcTo(x + radius * 0.25f, y, x + radius, y + radius, 270f, -180f, false) // 0.75
-        //path.arcTo(x, y, x + radius, y + radius, 270f, 180f * sign(tan(phase * PI)).toFloat(), false) // +-1
-        //path.arcTo(x, y, x + radius, y + radius, 270f, 0f, false) // +-0.5
-        /*path.arcTo(
-            x + radius * min(sin(phase * PI / 2), 0.0).toFloat(), y,
-            x + radius + radius * 0.75f * max(sin(phase * PI / 2), 0.0).toFloat(), y + radius,
-            270f, 180f * sign(tan(phase * PI).toFloat()), false)*/
-        //val l = abs(min(sin(phase * 2 * PI), 0.0)).toFloat()
-        //val r = cos(phase * 2 * PI).toFloat()
-        /*val l = radius * abs(sin(phase * PI).coerceIn(-1.0, 0.0)).toFloat()
-        val r = radius * sin(phase * PI).coerceIn(0.0, 1.0).toFloat()
-        val s = sign(tan(phase * PI))
-        path.arcTo(x + l, y, x + radius - r, y + radius, 270f, 180f * s, false)*/
         val offset = diameter * (1 - abs(2 * abs(phase) - 1)) / 2
         val s = sign(tan(phase * PI)).toFloat()
         path.arcTo(x + offset, y, x + diameter - offset, y + diameter, 270f, 180f * s, false)
