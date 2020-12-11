@@ -13,11 +13,7 @@ class Moon @JvmOverloads constructor(context: Context, attrs: AttributeSet? = nu
     private val moon = Shape(Color.YELLOW)
 
     init {
-        Timer().scheduleAtFixedRate(0, 100L) { invalidate() }
-    }
-
-    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-        super.onLayout(changed, left, top, right, bottom)
+        Timer().scheduleAtFixedRate(0, 100L) { postInvalidate() }
     }
 
     override fun onDraw(canvas: Canvas?) {

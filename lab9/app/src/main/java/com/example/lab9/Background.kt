@@ -17,7 +17,6 @@ class Background @JvmOverloads constructor(context: Context, attrs: AttributeSet
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
         bg = LinearGradient(0f, 0f, 0f,  height.toFloat(), resources.getColor(R.color.gradient1), resources.getColor(R.color.gradient2), Shader.TileMode.MIRROR)
-
     }
 
     override fun onDraw(canvas: Canvas?) {
